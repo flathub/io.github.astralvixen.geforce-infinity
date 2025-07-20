@@ -32,10 +32,7 @@ modules:
           - |
               HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
               yarn --offline install
-              yarn --offline build:css
-              yarn --offline esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react
-              yarn --offline build:electron
-              yarn --offline cpx 'src/assets/**/*' dist/assets
+              yarn --offline build
               . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
               cp -a builds/linux*unpacked $FLATPAK_DEST/geforce-infinity
               install -Dm 644 "flatpak/icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
