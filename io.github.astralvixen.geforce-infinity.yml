@@ -35,10 +35,10 @@ modules:
               yarn --offline build
               . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
               cp -a builds/linux*unpacked $FLATPAK_DEST/geforce-infinity
-              install -Dm 644 "flatpak/icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
-              install -Dm 644 "flatpak/${FLATPAK_ID}.metainfo.xml" "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
+              install -Dm 644 "files/icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
+              install -Dm 644 "files/${FLATPAK_ID}.metainfo.xml" "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
               install -Dm 755 "geforce-infinity.sh" "/app/bin/geforce-infinity"
-              install -Dm 644 "flatpak/${FLATPAK_ID}.desktop" "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+              install -Dm 644 "files/${FLATPAK_ID}.desktop" "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
 
       sources:
           - type: archive
@@ -59,3 +59,7 @@ modules:
                 - |
                     export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
                     exec zypak-wrapper /app/geforce-infinity/geforce-infinity "$@"
+
+          - type: archive
+            url: https://github.com/flathub/io.github.astralvixen.geforce-infinity/archive/refs/heads/master.zip
+            dest-filename: files.zip
