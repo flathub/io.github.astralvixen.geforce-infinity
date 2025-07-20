@@ -42,9 +42,9 @@ modules:
 
       sources:
           - type: archive
-            url: https://github.com/AstralVixen/GeForce-Infinity/archive/37b58b758346e696cb49c0f85806caf45d886756.zip
+            url: https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/1.1.2.zip
             dest-filename: geforce-infinity.zip
-            sha256: d2d357ca77563446ef0b6bf3a80d0350a7139ac4fff964aa54a5cb0593d06584
+            sha256: 458ec13fdb11b624248ddf16b0af6832e0b392addc654a2be811ff11791d4464
             x-checker-data:
                 type: json
                 url: https://api.github.com/repos/AstralVixen/GeForce-Infinity/releases/latest
