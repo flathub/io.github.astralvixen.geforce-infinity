@@ -49,7 +49,7 @@ modules:
                 type: json
                 url: https://api.github.com/repos/AstralVixen/GeForce-Infinity/releases/latest
                 version-query: .tag_name | sub("^v"; "")
-                url-query: .assets[] | select(.name=="" + $version + ".zip") | .browser_download_url
+                url-query: '"https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/\($version).zip"'
 
           - generated-sources.json
 
