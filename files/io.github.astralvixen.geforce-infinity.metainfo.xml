@@ -31,8 +31,12 @@
 	<launchable type="desktop-id">io.github.astralvixen.geforce-infinity.desktop</launchable>
 	<screenshots>
 		<screenshot type="default">
+			<caption>Welcome Screen with sidebar open</caption>
+			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/924b0aa98a5f744fa44fda06b70057a543c4f4b4/src/assets/resources/Screenshot1.png</image>
+		</screenshot>
+		<screenshot>
 			<caption>Welcome Screen</caption>
-			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/e634b5973f3eeb3bb44d13b55830a53c840f4f76/src/assets/resources/Screenshot5.png</image>
+			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/924b0aa98a5f744fa44fda06b70057a543c4f4b4/src/assets/resources/Screenshot5.png</image>
 		</screenshot>
 		<screenshot>
 			<caption>Game Screen</caption>
@@ -40,10 +44,25 @@
 		</screenshot>
 		<screenshot>
 			<caption>Game Screen with sidebar open</caption>
-			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/refs/tags/1.1.1/src/assets/resources/Screenshot3.png</image>
+			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/924b0aa98a5f744fa44fda06b70057a543c4f4b4/src/assets/resources/Screenshot3.png</image>
 		</screenshot>
 	</screenshots>
 	<releases>
+		<release version="v1.1.3" date="2025-07-28">
+			<description>
+				<p>What's Changed</p>
+				<ul>
+					<li>Account system: users can now register and log in. After logging in, they are able to sync settings to the cloud.</li>
+					<li>User dropdown menu in the header.</li>
+					<li>Inactivity notification: alerts you when you're about to be kicked due to inactivity.</li>
+					<li>Automute: mutes the game when the window is not in focus.</li>
+					<li>"Anti-kick" feature. Disclaimer: This is not a real anti-kick. It does not prevent kicks and may violate NVIDIA's TOS. It simply alt-tabs you back into the game if you're unfocused. (both autofocus and inactivity notifications must be enabled)</li>
+					<li>Button to reset all settings to their default values.</li>
+					<li>Support for smaller screens: added scrollable areas.</li>
+					<li>Info tooltips added in the settings section.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="v1.1.2" date="2025-07-18">
 			<description>
 				<p>added flatpak support</p>
