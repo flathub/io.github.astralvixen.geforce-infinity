@@ -62,7 +62,11 @@ modules:
                     export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
                     exec zypak-wrapper /app/geforce-infinity/geforce-infinity "$@"
 
-          - type: archive
-            url: https://github.com/flathub/io.github.astralvixen.geforce-infinity/archive/5ca2c3d5d7a9802b38b102693d1d28f3c11b608b.zip
-            dest-filename: files.zip
-            sha256: 4f39f31ea5726ba0ee482cbbf5a5ca7d48a6e887ce670b829d81f0089d3b2157
+          - type: file
+            path: files/icon.png
+
+          - type: file
+            path: files/io.github.astralvixen.geforce-infinity.desktop
+
+          - type: file
+            path: files/io.github.astralvixen.geforce-infinity.metainfo.xml
