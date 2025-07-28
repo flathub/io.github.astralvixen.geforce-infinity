@@ -31,6 +31,7 @@ modules:
               npm_config_offline: "true"
       build-commands:
           - |
+              rm -f .gitignore
               HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
               yarn --offline install
               yarn --offline build
