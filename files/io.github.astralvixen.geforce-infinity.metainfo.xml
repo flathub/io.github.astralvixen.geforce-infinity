@@ -56,7 +56,7 @@
 					<li>User dropdown menu in the header.</li>
 					<li>Inactivity notification: alerts you when you're about to be kicked due to inactivity.</li>
 					<li>Automute: mutes the game when the window is not in focus.</li>
-					<li>"Anti-kick" feature. Disclaimer: This is not a real anti-kick. It does not prevent kicks and may violate NVIDIA's TOS. It simply alt-tabs you back into the game if you're unfocused. (both autofocus and inactivity notifications must be enabled)</li>
+					<li>Anti-kick feature. Disclaimer: This is not a real anti-kick. It does not prevent kicks and may violate NVIDIA's TOS. It simply alt-tabs you back into the game if you're unfocused. (both autofocus and inactivity notifications must be enabled)</li>
 					<li>Button to reset all settings to their default values.</li>
 					<li>Support for smaller screens: added scrollable areas.</li>
 					<li>Info tooltips added in the settings section.</li>
