@@ -15,10 +15,11 @@ build-options:
 finish-args:
     - --share=network
     - --share=ipc
-    - --device=dri
     - --socket=x11
     - --socket=pulseaudio
     - --filesystem=xdg-run/discord-ipc-0
+    - --device=all
+    - --filesystem=/run/udev:ro
 
 modules:
     - name: geforce-infinity
@@ -32,27 +33,27 @@ modules:
           - |
               HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
               yarn --offline install
-              yarn --offline build:css
+              yarn --offline tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify
               yarn --offline esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react
-              yarn --offline build:electron
+              yarn --offline tsc -p tsconfig.electron.json
               yarn --offline cpx 'src/assets/**/*' dist/assets
               . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
               cp -a builds/linux*unpacked $FLATPAK_DEST/geforce-infinity
-              install -Dm 644 "flatpak/icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
-              install -Dm 644 "flatpak/${FLATPAK_ID}.metainfo.xml" "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
+              install -Dm 644 "icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
+              install -Dm 644 "${FLATPAK_ID}.metainfo.xml" "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
               install -Dm 755 "geforce-infinity.sh" "/app/bin/geforce-infinity"
-              install -Dm 644 "flatpak/${FLATPAK_ID}.desktop" "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+              install -Dm 644 "${FLATPAK_ID}.desktop" "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
 
       sources:
           - type: archive
-            url: https://github.com/AstralVixen/GeForce-Infinity/archive/37b58b758346e696cb49c0f85806caf45d886756.zip
+            url: https://github.com/AstralVixen/GeForce-Infinity/archive/83d1c593d9faa8dafe21c6dfd625bdb8b568000c.zip
             dest-filename: geforce-infinity.zip
-            sha256: d2d357ca77563446ef0b6bf3a80d0350a7139ac4fff964aa54a5cb0593d06584
+            sha256: 36d6cef9281e1b63370af289c092a9d5c3b011d9fcb1f4b03179ac457009b165
             x-checker-data:
                 type: json
                 url: https://api.github.com/repos/AstralVixen/GeForce-Infinity/releases/latest
                 version-query: .tag_name | sub("^v"; "")
-                url-query: .assets[] | select(.name=="" + $version + ".zip") | .browser_download_url
+                url-query: '"https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/\($version).zip"'
 
           - generated-sources.json
 
@@ -62,3 +63,12 @@ modules:
                 - |
                     export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
                     exec zypak-wrapper /app/geforce-infinity/geforce-infinity "$@"
+
+          - type: file
+            path: files/icon.png
+
+          - type: file
+            path: files/io.github.astralvixen.geforce-infinity.desktop
+
+          - type: file
+            path: files/io.github.astralvixen.geforce-infinity.metainfo.xml
