@@ -33,8 +33,9 @@ modules:
           - |
               HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
               yarn --offline install
-              yarn --offline tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify
-              yarn --offline esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react
+              npx tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify
+              export APP_VERSION=$(jq -r .version package.json)
+              yarn --offline esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react --define:__APP_VERSION__="\"$APP_VERSION\"" --entry-names=[name]
               yarn --offline tsc -p tsconfig.electron.json
               yarn --offline cpx 'src/assets/**/*' dist/assets
               . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
