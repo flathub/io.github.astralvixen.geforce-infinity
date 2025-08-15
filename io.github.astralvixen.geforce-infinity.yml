@@ -18,6 +18,7 @@ finish-args:
     - --socket=x11
     - --socket=pulseaudio
     - --filesystem=xdg-run/discord-ipc-0
+    - --filesystem=xdg-run/app/com.discordapp.Discord:create
     - --device=all
     - --filesystem=/run/udev:ro
 
@@ -47,9 +48,9 @@ modules:
 
       sources:
           - type: archive
-            url: https://github.com/AstralVixen/GeForce-Infinity/archive/83d1c593d9faa8dafe21c6dfd625bdb8b568000c.zip
+            url: https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/1.2.0.zip
             dest-filename: geforce-infinity.zip
-            sha256: 36d6cef9281e1b63370af289c092a9d5c3b011d9fcb1f4b03179ac457009b165
+            sha256: a951133b4163ba5b13b5e2cc9b778acc2e13929bcd5cc124e8054e2fff705225
             x-checker-data:
                 type: json
                 url: https://api.github.com/repos/AstralVixen/GeForce-Infinity/releases/latest
@@ -73,3 +74,9 @@ modules:
 
           - type: file
             path: files/io.github.astralvixen.geforce-infinity.metainfo.xml
+
+          - type: script
+            commands:
+                - for i in {0..9}; do
+                - test -S $XDG_RUNTIME_DIR/discord-ipc-$i || ln -sf {app/com.discordapp.Discord,$XDG_RUNTIME_DIR}/discord-ipc-$i;
+                - done

@@ -19,6 +19,8 @@
         <p>Key features:</p>
         <ul>
             <li>🚀 Native-like performance</li>
+			<li>💻 Up to 1440p support</li>
+			<li>🎞 Up to 120 FPS support</li>
             <li>💎 Modern SteamOS-like sidebar for controlling GeForce Infinity (Ctrl+I)</li>
             <li>🌐 Discord Rich Presence</li>
             <li>🎯 Autofocus when gaming rig is ready</li>
@@ -32,7 +34,7 @@
 	<screenshots>
 		<screenshot type="default">
 			<caption>Welcome Screen with sidebar open</caption>
-			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/924b0aa98a5f744fa44fda06b70057a543c4f4b4/src/assets/resources/Screenshot1.png</image>
+			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/c68fff4760c4e2dfbc97a5b12274823f2ad6357c/src/assets/resources/Screenshot1.png</image>
 		</screenshot>
 		<screenshot>
 			<caption>Welcome Screen</caption>
@@ -44,10 +46,20 @@
 		</screenshot>
 		<screenshot>
 			<caption>Game Screen with sidebar open</caption>
-			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/924b0aa98a5f744fa44fda06b70057a543c4f4b4/src/assets/resources/Screenshot3.png</image>
+			<image>https://raw.githubusercontent.com/AstralVixen/GeForce-Infinity/c68fff4760c4e2dfbc97a5b12274823f2ad6357c/src/assets/resources/Screenshot3.png</image>
 		</screenshot>
 	</screenshots>
 	<releases>
+		<release version="v1.2.0" date="2025-08-15">
+			<description>
+				<p>What's Changed</p>
+				<ul>
+					<li>Up to 1440p support.</li>
+					<li>Up to 120 FPS support.</li>
+					<li>Discord RPC bugfix in flatpak environment.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="v1.1.3" date="2025-07-28">
 			<description>
 				<p>What's Changed</p>
