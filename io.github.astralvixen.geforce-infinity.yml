@@ -18,6 +18,7 @@ finish-args:
     - --socket=x11
     - --socket=pulseaudio
     - --filesystem=xdg-run/discord-ipc-0
+    - --filesystem=xdg-run/app/com.discordapp.Discord:create
     - --device=all
     - --filesystem=/run/udev:ro
 
@@ -73,3 +74,9 @@ modules:
 
           - type: file
             path: files/io.github.astralvixen.geforce-infinity.metainfo.xml
+
+          - type: script
+            commands:
+                - for i in {0..9}; do
+                - test -S $XDG_RUNTIME_DIR/discord-ipc-$i || ln -sf {app/com.discordapp.Discord,$XDG_RUNTIME_DIR}/discord-ipc-$i;
+                - done
