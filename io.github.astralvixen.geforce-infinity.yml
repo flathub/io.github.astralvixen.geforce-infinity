@@ -1,82 +1,82 @@
 id: io.github.astralvixen.geforce-infinity
 runtime: org.freedesktop.Platform
-runtime-version: "25.08"
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: "25.08"
+base-version: '25.08'
 sdk-extensions:
-    - org.freedesktop.Sdk.Extension.node22
+  - org.freedesktop.Sdk.Extension.node22
 
 command: geforce-infinity
 
 build-options:
-    append-path: /usr/lib/sdk/node22/bin
+  append-path: /usr/lib/sdk/node22/bin
 
 finish-args:
-    - --share=network
-    - --share=ipc
-    - --socket=x11
-    - --socket=pulseaudio
-    - --filesystem=xdg-run/discord-ipc-0
-    - --filesystem=xdg-run/app/com.discordapp.Discord:create
-    - --device=all
-    - --filesystem=/run/udev:ro
+  - --share=network
+  - --share=ipc
+  - --socket=x11
+  - --socket=pulseaudio
+  - --filesystem=xdg-run/discord-ipc-0
+  - --filesystem=xdg-run/app/com.discordapp.Discord:create
+  - --device=all
+  - --filesystem=/run/udev:ro
 
 modules:
-    - name: geforce-infinity
-      buildsystem: simple
-      build-options:
-          env:
-              XDG_CACHE_HOME: /run/build/geforce-infinity/flatpak-node/cache
-              npm_config_cache: /run/build/geforce-infinity/flatpak-node/npm-cache
-              npm_config_offline: "true"
-      build-commands:
+  - name: geforce-infinity
+    buildsystem: simple
+    build-options:
+      env:
+        XDG_CACHE_HOME: /run/build/geforce-infinity/flatpak-node/cache
+        npm_config_cache: /run/build/geforce-infinity/flatpak-node/npm-cache
+        npm_config_offline: 'true'
+    build-commands:
+      - |
+        HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
+        yarn --offline install
+        npx tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify
+        export APP_VERSION=$(jq -r .version package.json)
+        yarn --offline esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react --define:__APP_VERSION__="\"$APP_VERSION\"" --entry-names=[name]
+        yarn --offline tsc -p tsconfig.electron.json
+        yarn --offline cpx 'src/assets/**/*' dist/assets
+        . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
+        cp -a builds/linux*unpacked $FLATPAK_DEST/geforce-infinity
+        install -Dm 644 "icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
+        install -Dm 644 "${FLATPAK_ID}.metainfo.xml" "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
+        install -Dm 755 "geforce-infinity.sh" "/app/bin/geforce-infinity"
+        install -Dm 644 "${FLATPAK_ID}.desktop" "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+
+    sources:
+      - type: archive
+        url: https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/1.2.1.zip
+        dest-filename: geforce-infinity.zip
+        sha256: 25eeba2c18b34387441bf11eade2de496fe5513fb3e3bff23fd70baf2e82fb3e
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/AstralVixen/GeForce-Infinity/releases/latest
+          version-query: .tag_name | sub("^v"; "")
+          url-query: '"https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/\($version).zip"'
+
+      - generated-sources.json
+
+      - type: script
+        dest-filename: geforce-infinity.sh
+        commands:
           - |
-              HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
-              yarn --offline install
-              npx tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify
-              export APP_VERSION=$(jq -r .version package.json)
-              yarn --offline esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react --define:__APP_VERSION__="\"$APP_VERSION\"" --entry-names=[name]
-              yarn --offline tsc -p tsconfig.electron.json
-              yarn --offline cpx 'src/assets/**/*' dist/assets
-              . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
-              cp -a builds/linux*unpacked $FLATPAK_DEST/geforce-infinity
-              install -Dm 644 "icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
-              install -Dm 644 "${FLATPAK_ID}.metainfo.xml" "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
-              install -Dm 755 "geforce-infinity.sh" "/app/bin/geforce-infinity"
-              install -Dm 644 "${FLATPAK_ID}.desktop" "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+            export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
+            exec zypak-wrapper /app/geforce-infinity/geforce-infinity "$@"
 
-      sources:
-          - type: archive
-            url: https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/1.2.0.zip
-            dest-filename: geforce-infinity.zip
-            sha256: a951133b4163ba5b13b5e2cc9b778acc2e13929bcd5cc124e8054e2fff705225
-            x-checker-data:
-                type: json
-                url: https://api.github.com/repos/AstralVixen/GeForce-Infinity/releases/latest
-                version-query: .tag_name | sub("^v"; "")
-                url-query: '"https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/\($version).zip"'
+      - type: file
+        path: files/icon.png
 
-          - generated-sources.json
+      - type: file
+        path: files/io.github.astralvixen.geforce-infinity.desktop
 
-          - type: script
-            dest-filename: geforce-infinity.sh
-            commands:
-                - |
-                    export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
-                    exec zypak-wrapper /app/geforce-infinity/geforce-infinity "$@"
+      - type: file
+        path: files/io.github.astralvixen.geforce-infinity.metainfo.xml
 
-          - type: file
-            path: files/icon.png
-
-          - type: file
-            path: files/io.github.astralvixen.geforce-infinity.desktop
-
-          - type: file
-            path: files/io.github.astralvixen.geforce-infinity.metainfo.xml
-
-          - type: script
-            commands:
-                - for i in {0..9}; do
-                - test -S $XDG_RUNTIME_DIR/discord-ipc-$i || ln -sf {app/com.discordapp.Discord,$XDG_RUNTIME_DIR}/discord-ipc-$i;
-                - done
+      - type: script
+        commands:
+          - for i in {0..9}; do
+          - test -S $XDG_RUNTIME_DIR/discord-ipc-$i || ln -sf {app/com.discordapp.Discord,$XDG_RUNTIME_DIR}/discord-ipc-$i;
+          - done
