@@ -51,6 +51,17 @@
 		</screenshot>
 	</screenshots>
 	<releases>
+		<release version="v1.2.1" date="2026-02-03">
+			<description>
+				<p>What's Changed</p>
+				<ul>
+					<li>Add FPS and Resolution Settings.</li>
+					<li>Added custom discord rpc client for flatpak support and bug fixes.</li>
+					<li>Added section how to use 1440p and 120 fps streaming.</li>
+					<li>Keyboard layout selection on the GeForce Infinity menu.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="v1.2.0" date="2025-08-15">
 			<description>
 				<p>What's Changed</p>
