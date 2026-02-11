@@ -7694,7 +7694,7 @@
     },
     {
         "type": "git",
-        "url": "git+ssh://git@github.com/devsnek/node-register-scheme.git",
+        "url": "https://github.com/devsnek/node-register-scheme.git",
         "commit": "e7cc9a63a1f512565da44cb57316d9fb10750e17",
         "dest": "flatpak-node/tmp/node-register-scheme.git-e7cc9a63a1f512565da44cb57316d9fb10750e17"
     },
