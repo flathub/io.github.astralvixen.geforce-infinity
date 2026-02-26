@@ -40,7 +40,8 @@ modules:
         yarn --offline tsc -p tsconfig.electron.json
         yarn --offline cpx 'src/assets/**/*' dist/assets
         . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
-        cp -a builds/linux*unpacked $FLATPAK_DEST/geforce-infinity
+	mkdir -p $FLATPAK_DEST/geforce-infinity
+        cp -a dist/linux*unpacked/* $FLATPAK_DEST/geforce-infinity/
         install -Dm 644 "icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
         install -Dm 644 "${FLATPAK_ID}.metainfo.xml" "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
         install -Dm 755 "geforce-infinity.sh" "/app/bin/geforce-infinity"
