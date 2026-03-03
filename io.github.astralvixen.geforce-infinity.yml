@@ -65,7 +65,7 @@ modules:
             commands:
                 - |
                     export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
-                    exec zypak-wrapper /app/geforce-infinity/geforce-infinity "$@"
+                    exec zypak-wrapper /app/geforce-infinity/GeForceInfinity "$@"
 
           - type: file
             path: files/icon.png
