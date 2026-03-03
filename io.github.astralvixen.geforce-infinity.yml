@@ -34,11 +34,11 @@ modules:
           - |
               HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
               yarn --offline install --ignore-optional
-              npx tailwindcss -i src/overlay/index.css -o builds/assets/tailwind.bundle.css --minify
               export APP_VERSION=$(jq -r .version package.json)
-              yarn --offline esbuild src/overlay/index.tsx --bundle --outdir=builds/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react --define:__APP_VERSION__="\"$APP_VERSION\"" --entry-names=[name]
-              yarn --offline tsc -p tsconfig.electron.json
-              yarn --offline cpx 'src/assets/**/*' builds/assets
+              yarn --offline run tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify
+              yarn --offline run esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react --define:__APP_VERSION__="\"$APP_VERSION\"" --entry-names=[name]
+              yarn --offline run tsc -p tsconfig.electron.json
+              yarn --offline run cpx 'src/assets/**/*' dist/assets
               . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
               mkdir -p $FLATPAK_DEST/geforce-infinity
               cp -a builds/linux*unpacked/* $FLATPAK_DEST/geforce-infinity/
@@ -49,9 +49,9 @@ modules:
 
       sources:
           - type: archive
-            url: https://github.com/AstralVixen/GeForce-Infinity/releases/download/1.2.2/GeForceInfinity-linux-1.2.2-x64.zip
+            url: https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/1.2.2.zip
             dest-filename: geforce-infinity.zip
-            sha256: 437a748e5087d591348045b0e45246573c60480a7205b25c6c6c90ffe80b6b55
+            sha256: b79d586915e524684e0dff1901e381b4d0e9791ae991e025045ed6441feadce9
             x-checker-data:
                 type: json
                 url: https://api.github.com/repos/AstralVixen/GeForce-Infinity/releases/latest
@@ -65,7 +65,7 @@ modules:
             commands:
                 - |
                     export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
-                    exec zypak-wrapper /app/geforce-infinity/GeForceInfinity "$@"
+                    exec zypak-wrapper /app/geforce-infinity/geforce-infinity "$@"
 
           - type: file
             path: files/icon.png

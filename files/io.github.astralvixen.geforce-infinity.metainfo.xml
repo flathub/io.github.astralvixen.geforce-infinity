@@ -51,6 +51,14 @@
 		</screenshot>
 	</screenshots>
 	<releases>
+		<release version="v1.2.2" date="2026-03-03">
+			<description>
+				<p>What's Changed</p>
+				<ul>
+					<li>Flatpak fix.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="v1.2.1" date="2026-02-03">
 			<description>
 				<p>What's Changed</p>
