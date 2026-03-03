@@ -49,7 +49,7 @@ modules:
 
       sources:
           - type: archive
-            url: https://github.com/AstralVixen/GeForce-Infinity/releases/download/untagged-2c182684a5d32260f72a/GeForceInfinity-linux-1.2.2-x64.zip
+            url: https://github.com/AstralVixen/GeForce-Infinity/releases/download/1.2.2/GeForceInfinity-linux-1.2.2-x64.zip
             dest-filename: geforce-infinity.zip
             sha256: 437a748e5087d591348045b0e45246573c60480a7205b25c6c6c90ffe80b6b55
             x-checker-data:
