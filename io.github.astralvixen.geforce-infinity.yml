@@ -33,15 +33,15 @@ modules:
       build-commands:
           - |
               HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
-              yarn --offline install
-              npx tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify
+              yarn --offline install --ignore-optional
               export APP_VERSION=$(jq -r .version package.json)
-              yarn --offline esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react --define:__APP_VERSION__="\"$APP_VERSION\"" --entry-names=[name]
-              yarn --offline tsc -p tsconfig.electron.json
-              yarn --offline cpx 'src/assets/**/*' dist/assets
+              yarn --offline run tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify
+              yarn --offline run esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --jsx=automatic --jsx-import-source=react --define:__APP_VERSION__="\"$APP_VERSION\"" --entry-names=[name]
+              yarn --offline run tsc -p tsconfig.electron.json
+              yarn --offline run cpx 'src/assets/**/*' dist/assets
               . flatpak-node/electron-builder-arch-args.sh; yarn --offline run electron-builder --dir --linux $ELECTRON_BUILDER_ARCH_ARGS
               mkdir -p $FLATPAK_DEST/geforce-infinity
-              cp -a dist/linux*unpacked/* $FLATPAK_DEST/geforce-infinity/
+              cp -a builds/linux*unpacked/* $FLATPAK_DEST/geforce-infinity/
               install -Dm 644 "icon.png" "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
               install -Dm 644 "${FLATPAK_ID}.metainfo.xml" "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
               install -Dm 755 "geforce-infinity.sh" "/app/bin/geforce-infinity"
@@ -49,9 +49,9 @@ modules:
 
       sources:
           - type: archive
-            url: https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/1.2.1.zip
+            url: https://github.com/AstralVixen/GeForce-Infinity/archive/refs/tags/1.2.2.zip
             dest-filename: geforce-infinity.zip
-            sha256: 25eeba2c18b34387441bf11eade2de496fe5513fb3e3bff23fd70baf2e82fb3e
+            sha256: b79d586915e524684e0dff1901e381b4d0e9791ae991e025045ed6441feadce9
             x-checker-data:
                 type: json
                 url: https://api.github.com/repos/AstralVixen/GeForce-Infinity/releases/latest
